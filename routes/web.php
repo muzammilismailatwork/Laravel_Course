@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\ApiUsers;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,10 @@ Route::get("foreach",[User::class,"loop"]);
 
 Route::get("noaccess",[FormController::class,"noaccess"])->name("noaccess");
 Route::get("secreat",[FormController::class,"secreat"])->name("secreat");
+Route::get("overage",[FormController::class,"overage"])->name("overage");
 Route::group(["middleware"=>["Secreat"]], function(){
     Route::get("login",[FormController::class,"login_page"]);
-    Route::post("data",[FormController::class,"get_data"]);
+    Route::post("data",[FormController::class,"get_data"])->middleware("overage");
 });
+Route::get("apidata",[ApiUsers::class,"api_data"]);
 
